@@ -244,17 +244,34 @@ nav.scrolled {
   color: var(--mint);
 }
 
-/* Diagnóstico visual */
+/* ----- SECCIÓN DIAGNÓSTICO MODIFICADA (SOLO TEXTO, CENTRADO, SIN IMÁGENES NI COMPARATIVAS) ----- */
 .diagnostico {
   background: var(--dark);
   padding: 5rem 0;
   position: relative;
 }
-.diagnostico-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
+.diagnostico .container {
+  max-width: 900px;  /* Contenido más angosto para mejor lectura */
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.diagnostico-contenido {
+  text-align: center;
+  background: transparent;
+  padding: 1rem 0;
+}
+.tag-diagnostico {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--mint);
+  border: 1px solid rgba(15,191,159,0.3);
+  border-radius: 40px;
+  padding: 0.2rem 1rem;
+  margin-bottom: 1.5rem;
+  background: transparent;
 }
 .diag-title {
   font-size: clamp(2rem, 4vw, 3rem);
@@ -264,9 +281,11 @@ nav.scrolled {
   margin-bottom: 1.5rem;
 }
 .diag-text {
-  color: var(--light);
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
   line-height: 1.5;
+  color: var(--light);
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
 }
 .callout {
   background: rgba(15,191,159,0.08);
@@ -275,27 +294,11 @@ nav.scrolled {
   border-radius: 1rem;
   font-weight: 500;
   color: var(--cream);
+  max-width: 600px;
+  margin: 1.5rem auto 0 auto;
+  text-align: left;
 }
-.infografia {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-.before-after {
-  background: var(--dark2);
-  border-radius: 1.2rem;
-  padding: 1rem;
-  text-align: center;
-  flex: 1;
-}
-.before-after img {
-  width: 100%;
-  border-radius: 1rem;
-  margin-top: 0.8rem;
-}
-@media (max-width: 800px) {
-  .diagnostico-grid { grid-template-columns: 1fr; }
-}
+/* Fin de modificaciones exclusivas en diagnóstico */
 
 /* Sistema (fases) visual */
 .sistema {
@@ -675,22 +678,14 @@ footer {
   </div>
 </section>
 
-<!-- Diagnóstico + infografía visual (Problema/Cambio) -->
+<!-- SECCIÓN DIAGNÓSTICO MODIFICADA (SIN IMÁGENES, SIN ANTES/DESPUÉS, SOLO TEXTO CENTRADO) -->
 <section class="diagnostico">
   <div class="container">
-    <div class="diagnostico-grid">
-      <div class="reveal">
-        <div class="tag" style="color:var(--mint); border-color: rgba(15,191,159,0.3); display:inline-block; font-size:0.7rem; margin-bottom:1rem;">El diagnóstico</div>
-        <h2 class="diag-title">El producto está listo.<br>El sistema, aún no.</h2>
-        <p class="diag-text">El problema no es tu servicio. Es que hoy tu presencia digital todavía no refleja el valor real de tu negocio ni convierte el interés en oportunidades constantes.</p>
-        <div class="callout">Tener presencia digital y tener un sistema de captación son dos cosas distintas. Esta propuesta construye la segunda.</div>
-      </div>
-      <div class="reveal">
-        <div class="infografia">
-          <div class="before-after"><strong>Antes</strong><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&auto=format" alt="desorden"></div>
-          <div class="before-after"><strong>Después</strong><img src="https://images.unsplash.com/photo-1551434678-e076c2235a9a?w=300&auto=format" alt="sistema estructurado"></div>
-        </div>
-      </div>
+    <div class="diagnostico-contenido reveal">
+      <div class="tag-diagnostico">El diagnóstico</div>
+      <h2 class="diag-title">El producto está listo.<br>El sistema, aún no.</h2>
+      <p class="diag-text">El problema no es tu servicio. Es que hoy tu presencia digital todavía no refleja el valor real de tu negocio ni convierte el interés en oportunidades constantes.</p>
+      <div class="callout">Tener presencia digital y tener un sistema de captación son dos cosas distintas. Esta propuesta construye la segunda.</div>
     </div>
   </div>
 </section>
