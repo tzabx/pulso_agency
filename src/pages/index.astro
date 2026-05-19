@@ -1,0 +1,16 @@
+---
+import site from '../data/site.json';
+import home from '../data/home.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/shared/Footer.astro';
+import Navbar from '../components/shared/Navbar.astro';
+import SectionRenderer from '../components/shared/SectionRenderer.astro';
+---
+
+<BaseLayout meta={home.meta} site={site.site}>
+  <Navbar branding={site.branding} navigation={site.navigation} />
+  <main>
+    {home.sections.map((section) => <SectionRenderer section={section} />)}
+  </main>
+  <Footer footer={site.footer} />
+</BaseLayout>

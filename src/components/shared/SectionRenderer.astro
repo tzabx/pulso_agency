@@ -1,0 +1,33 @@
+---
+import HeroSection from '../sections/HeroSection.astro';
+import DiagnosisSection from '../sections/DiagnosisSection.astro';
+import SystemSection from '../sections/SystemSection.astro';
+import DifferentiatorsSection from '../sections/DifferentiatorsSection.astro';
+import TestimonialsSection from '../sections/TestimonialsSection.astro';
+import ProcessSection from '../sections/ProcessSection.astro';
+import CtaSection from '../sections/CtaSection.astro';
+
+interface Props {
+  section: {
+    type: string;
+    id?: string;
+    props: Record<string, unknown>;
+  };
+}
+
+const { section } = Astro.props;
+
+const componentMap = {
+  hero: HeroSection,
+  diagnosis: DiagnosisSection,
+  system: SystemSection,
+  differentiators: DifferentiatorsSection,
+  testimonials: TestimonialsSection,
+  process: ProcessSection,
+  cta: CtaSection,
+} as const;
+
+const Component = componentMap[section.type as keyof typeof componentMap];
+---
+
+{Component && <Component id={section.id} {...section.props} />}

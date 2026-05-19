@@ -1,0 +1,51 @@
+---
+import Button from '../common/Button.astro';
+import ContactItem from '../common/ContactItem.astro';
+import MediaFrame from '../common/MediaFrame.astro';
+import SplitLayout from '../layout/SplitLayout.astro';
+import SectionShell from '../layout/SectionShell.astro';
+
+interface ContactEntry {
+  icon: string;
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  id?: string;
+  badge: string;
+  title: string;
+  highlight: string;
+  description: string;
+  primaryCta: { href: string; label: string; target?: string };
+  secondaryCta: { href: string; label: string; target?: string };
+  contacts: ContactEntry[];
+  image: { src: string; alt: string };
+}
+
+const { id, badge, title, highlight, description, primaryCta, secondaryCta, contacts, image } = Astro.props;
+---
+
+<SectionShell id={id}>
+  <div class="reveal rounded-5xl bg-brand-dark p-8 md:p-12">
+    <SplitLayout>
+      <div slot="start">
+        <p class="mb-4 text-xs uppercase tracking-[0.2rem] text-brand-mint">{badge}</p>
+        <h2 class="text-4xl font-bold leading-tight text-white md:text-5xl">
+          {title} <span class="text-gradient">{highlight}</span>
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-brand-light md:text-lg">{description}</p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <Button href={primaryCta.href} label={primaryCta.label} target={primaryCta.target} />
+          <Button href={secondaryCta.href} label={secondaryCta.label} variant="outline" className="border-white/20 text-white hover:border-brand-mint hover:text-brand-mint" />
+        </div>
+        <div class="mt-8 flex flex-wrap gap-4">
+          {contacts.map((contact) => <ContactItem {...contact} />)}
+        </div>
+      </div>
+      <div slot="end">
+        <MediaFrame src={image.src} alt={image.alt} className="rounded-3xl" />
+      </div>
+    </SplitLayout>
+  </div>
+</SectionShell>

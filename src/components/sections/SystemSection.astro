@@ -1,0 +1,36 @@
+---
+import SectionHeader from '../common/SectionHeader.astro';
+import SectionShell from '../layout/SectionShell.astro';
+import SystemItemCard from '../cards/SystemItemCard.astro';
+
+interface SystemItem {
+  number: string;
+  title: string;
+  description: string;
+  body: string;
+  checklist: string[];
+  image: { src: string; alt: string };
+}
+
+interface Props {
+  id?: string;
+  badge: string;
+  title: string;
+  highlight: string;
+  description: string;
+  items: SystemItem[];
+}
+
+const { id, badge, title, highlight, description, items } = Astro.props;
+---
+
+<SectionShell id={id}>
+  <SectionHeader badge={badge} title={title} highlight={highlight} description={description} className="reveal mb-12" />
+  <div class="space-y-8">
+    {items.map((item) => (
+      <div class="reveal">
+        <SystemItemCard {...item} />
+      </div>
+    ))}
+  </div>
+</SectionShell>

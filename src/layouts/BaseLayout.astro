@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  meta: {
+    title?: string;
+    description?: string;
+  };
+  site: {
+    defaultTitle: string;
+    defaultDescription: string;
+    locale?: string;
+  };
+}
+
+const { meta, site } = Astro.props;
+const title = meta.title ?? site.defaultTitle;
+const description = meta.description ?? site.defaultDescription;
+const locale = site.locale ?? 'es';
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link href="https://fonts.bunny.net/css?family=geomanist:300,400,500,600,700" rel="stylesheet" />
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      const nav = document.querySelector('[data-navbar]');
+      const syncNavbar = () => {
+        if (!nav) return;
+        if (window.scrollY > 30) {
+          nav.classList.add('bg-brand-cream/90', 'backdrop-blur', 'shadow-[0_2px_10px_rgba(0,0,0,0.05)]');
+        } else {
+          nav.classList.remove('bg-brand-cream/90', 'backdrop-blur', 'shadow-[0_2px_10px_rgba(0,0,0,0.05)]');
+        }
+      };
+      syncNavbar();
+      window.addEventListener('scroll', syncNavbar, { passive: true });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+    </script>
+  </body>
+</html>

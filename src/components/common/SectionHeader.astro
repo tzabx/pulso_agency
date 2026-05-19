@@ -1,0 +1,38 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  badge?: string;
+  title: string;
+  highlight?: string;
+  description?: string;
+  tone?: 'light' | 'dark';
+  className?: string;
+}
+
+const {
+  badge,
+  title,
+  highlight,
+  description,
+  tone = 'light',
+  className = '',
+} = Astro.props;
+
+const titleClass = tone === 'dark' ? 'text-white' : 'text-brand-dark';
+const descriptionClass = tone === 'dark' ? 'text-brand-light' : 'text-brand-mid';
+---
+
+<div class:list={['mx-auto max-w-3xl text-center', className]}>
+  {badge && <Badge label={badge} tone={tone === 'dark' ? 'dark' : 'light'} className="mb-6" />}
+  <h2 class:list={['text-4xl font-bold leading-tight md:text-5xl', titleClass]}>
+    {title}
+    {highlight && (
+      <>
+        {' '}
+        <span class="text-gradient">{highlight}</span>
+      </>
+    )}
+  </h2>
+  {description && <p class:list={['mt-4 text-base leading-relaxed md:text-lg', descriptionClass]}>{description}</p>}
+</div>

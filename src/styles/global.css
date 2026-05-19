@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-cream font-sans text-brand-dark antialiased;
+  }
+
+  iframe {
+    @apply block;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-brand-gradient bg-clip-text text-transparent;
+  }
+
+  .reveal {
+    @apply translate-y-6 opacity-0 transition-all duration-700 ease-out;
+  }
+
+  .reveal.is-visible {
+    @apply translate-y-0 opacity-100;
+  }
+}

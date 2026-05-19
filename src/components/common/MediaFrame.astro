@@ -1,0 +1,14 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+  className?: string;
+  imageClassName?: string;
+}
+
+const { src, alt = '', className = '', imageClassName = '' } = Astro.props;
+---
+
+<div class:list={['overflow-hidden rounded-4xl shadow-feature', className]}>
+  {src ? <img src={src} alt={alt} class:list={['h-full w-full object-cover', imageClassName]} loading="lazy" /> : <slot />}
+</div>
