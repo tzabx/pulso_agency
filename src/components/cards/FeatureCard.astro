@@ -23,7 +23,7 @@ const iconMarkup = icons[icon as keyof typeof icons] ?? icons.layers;
 
 <BaseCard tone="glass" className="h-full border transition hover:border-brand-mint hover:bg-brand-mint/5">
   <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-dark2 shadow-[4px_4px_12px_rgba(0,0,0,0.3),-2px_-2px_6px_rgba(255,255,255,0.03)]">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-brand-mint" set:html={iconMarkup} />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-brand-mint" aria-hidden="true" set:html={iconMarkup} />
   </div>
   <h3 class="text-lg font-bold text-white">{title}</h3>
   <p class="mt-2 text-sm leading-relaxed text-brand-light">{description}</p>
