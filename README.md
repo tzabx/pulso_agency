@@ -35,7 +35,7 @@ Set the following values in **Settings → Secrets and variables → Actions**:
 - `VPS_HOST` (optional): VPS host/IP.
 - `VPS_USER` (optional): SSH username.
 - `VPS_PORT` (optional, default `22`): VPS SSH port.
-- `VPS_TARGET_DIR` (optional): target directory on the server (for example `/var/www/pulso_agency`).
+- `VPS_TARGET_DIR` (optional): target directory on the server (e.g., `/var/www/pulso_agency`).
 
 #### Repository Secrets
 
