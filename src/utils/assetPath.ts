@@ -1,7 +1,11 @@
 const trimTrailingSlash = (value: string) => value.endsWith('/') ? value.slice(0, -1) : value;
 
 export const withBasePath = (path: string) => {
-  if (!path.startsWith('/') || path.startsWith('//')) {
+  if (!path.startsWith('/')) {
+    return path;
+  }
+
+  if (path.startsWith('//')) {
     return path;
   }
 

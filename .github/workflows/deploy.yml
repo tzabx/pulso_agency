@@ -103,6 +103,7 @@ jobs:
       - name: Trust VPS host key (fallback scan)
         if: ${{ secrets.VPS_KNOWN_HOSTS == '' }}
         run: |
+          echo "WARNING: VPS_KNOWN_HOSTS is not set. Using ssh-keyscan fallback; verify host fingerprints for production."
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ vars.VPS_PORT || '22' }}" "${{ vars.VPS_HOST }}" >> ~/.ssh/known_hosts
 

@@ -43,6 +43,6 @@ Configura estos valores en **Settings → Secrets and variables → Actions**:
 
 > Para habilitar deploy VPS, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR` y `VPS_SSH_KEY`.
 
-## Rehabilitar/ajustar deploy VPS después
+## Rehabilitar/ajustar despliegue a VPS después
 
 No hace falta rediseñar el workflow: solo agrega/actualiza los variables/secrets anteriores y vuelve a ejecutar el workflow (`push` a `main` o `workflow_dispatch`).
