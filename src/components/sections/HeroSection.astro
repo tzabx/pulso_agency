@@ -2,6 +2,7 @@
 import Button from '../common/Button.astro';
 import SplitLayout from '../layout/SplitLayout.astro';
 import SectionShell from '../layout/SectionShell.astro';
+import { withBasePath } from '../../utils/assetPath';
 
 interface Props {
   id?: string;
@@ -30,7 +31,7 @@ const {
 
 <SectionShell id={id} className="relative min-h-screen overflow-hidden bg-hero-radial pt-28">
   <div class="absolute inset-0 opacity-10">
-    <img src="/images/header-PI-agency.png" alt="" class="h-full w-full object-cover object-center" loading="lazy" />
+    <img src={withBasePath('/images/header-PI-agency.png')} alt="" class="h-full w-full object-cover object-center" loading="lazy" />
   </div>
   <SplitLayout className="relative z-10">
     <div slot="start" class="reveal text-center lg:text-left">
@@ -50,7 +51,7 @@ const {
       </div>
     </div>
     <div slot="end" class="reveal relative mx-auto max-w-2xl lg:max-w-none">
-      <img src={media.src} alt={media.alt} class="w-full rounded-4xl shadow-feature" loading="eager" />
+      <img src={withBasePath(media.src)} alt={media.alt} class="w-full rounded-4xl shadow-feature" loading="eager" />
       {floatingBadge && (
         <div class="absolute -bottom-4 left-1/2 rounded-full border-l-4 border-brand-mint bg-white px-5 py-3 text-sm font-semibold text-brand-dark shadow-soft sm:left-0 sm:-translate-x-0 lg:-left-4 lg:translate-x-0">
           {floatingBadge}

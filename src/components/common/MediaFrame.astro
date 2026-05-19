@@ -1,4 +1,6 @@
 ---
+import { withBasePath } from '../../utils/assetPath';
+
 interface Props {
   src?: string;
   alt?: string;
@@ -10,5 +12,5 @@ const { src, alt = '', className = '', imageClassName = '' } = Astro.props;
 ---
 
 <div class:list={['overflow-hidden rounded-4xl shadow-feature', className]}>
-  {src ? <img src={src} alt={alt} class:list={['h-full w-full object-cover', imageClassName]} loading="lazy" /> : <slot />}
+  {src ? <img src={withBasePath(src)} alt={alt} class:list={['h-full w-full object-cover', imageClassName]} loading="lazy" /> : <slot />}
 </div>
