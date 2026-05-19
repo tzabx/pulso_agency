@@ -1,49 +1,49 @@
 # pulso_agency
 
-Landing de Pulso Inteligente Agency.
+Pulso Inteligente Agency landing page.
 
-## Desarrollo local
+## Local development
 
 ```bash
 npm ci
 npm run dev
 ```
 
-## Deploy automático
+## Automatic deployment
 
-El repositorio usa `.github/workflows/deploy.yml` con esta estrategia:
+This repository uses `.github/workflows/deploy.yml` with the following strategy:
 
-1. **Siempre** compila el sitio Astro estático (`npm run build`).
-2. Publica el resultado en **GitHub Pages** (flujo principal por defecto).
-3. Si además existe configuración de VPS, también despliega al servidor por SSH/rsync.
+1. It **always** builds the static Astro site (`npm run build`).
+2. It publishes the output to **GitHub Pages** (default primary path).
+3. If VPS configuration is present, it also deploys to the server via SSH/rsync.
 
-### Comportamiento por escenario
+### Behavior by scenario
 
-- **Sin configuración VPS**: el job `deploy_vps` se omite y el workflow termina exitosamente con deploy a Pages.
-- **Con configuración VPS completa**: además del deploy a Pages, se ejecuta deploy al VPS.
-- Si falta cualquier valor VPS requerido (incluyendo `VPS_KNOWN_HOSTS`), el workflow continúa solo con GitHub Pages.
-- **Sin `CUSTOM_DOMAIN`**: el build se genera compatible con `https://<usuario>.github.io/<repo>/`.
-- **Con `CUSTOM_DOMAIN`**: el build usa rutas raíz (`/`) y además se publica `CNAME`.
+- **Without VPS configuration**: the `deploy_vps` job is skipped and the workflow still succeeds with Pages deployment.
+- **With full VPS configuration**: in addition to Pages deployment, the workflow deploys to the VPS.
+- If any required VPS value is missing (including `VPS_KNOWN_HOSTS`), the workflow continues with GitHub Pages only.
+- **Without `CUSTOM_DOMAIN`**: the build is generated to work with `https://<user>.github.io/<repo>/`.
+- **With `CUSTOM_DOMAIN`**: the build uses root paths (`/`) and also publishes `CNAME`.
 
-### Placeholders de configuración
+### Configuration placeholders
 
-Configura estos valores en **Settings → Secrets and variables → Actions**:
+Set the following values in **Settings → Secrets and variables → Actions**:
 
 #### Repository Variables
 
-- `CUSTOM_DOMAIN` (opcional): dominio personalizado para Pages. Si existe, el workflow crea `dist/CNAME`.
-- `VPS_HOST` (opcional): host/IP del VPS.
-- `VPS_USER` (opcional): usuario SSH.
-- `VPS_PORT` (opcional, default `22`): puerto SSH del VPS.
-- `VPS_TARGET_DIR` (opcional): ruta destino en el servidor (ej. `/var/www/pulso_agency`).
+- `CUSTOM_DOMAIN` (optional): custom domain for Pages. If set, the workflow creates `dist/CNAME`.
+- `VPS_HOST` (optional): VPS host/IP.
+- `VPS_USER` (optional): SSH username.
+- `VPS_PORT` (optional, default `22`): VPS SSH port.
+- `VPS_TARGET_DIR` (optional): target directory on the server (for example `/var/www/pulso_agency`).
 
 #### Repository Secrets
 
-- `VPS_SSH_KEY` (opcional): clave privada SSH para conectar al VPS.
-- `VPS_KNOWN_HOSTS` (requerido para VPS): contenido de `known_hosts` para validar huella del servidor.
+- `VPS_SSH_KEY` (optional): private SSH key to connect to the VPS.
+- `VPS_KNOWN_HOSTS` (required for VPS): `known_hosts` content used to validate the server fingerprint.
 
-> Para habilitar deploy VPS, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR`, `VPS_SSH_KEY` y `VPS_KNOWN_HOSTS`.
+> To enable VPS deployment, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR`, `VPS_SSH_KEY`, and `VPS_KNOWN_HOSTS`.
 
-## Rehabilitar/ajustar despliegue a VPS después
+## Re-enable/adjust VPS deployment later
 
-No hace falta rediseñar el workflow: solo agrega/actualiza los variables/secrets anteriores y vuelve a ejecutar el workflow (`push` a `main` o `workflow_dispatch`).
+No workflow redesign is needed: just add/update the variables/secrets above and run the workflow again (push to `main` or `workflow_dispatch`).
