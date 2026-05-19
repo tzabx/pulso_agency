@@ -21,6 +21,7 @@ El repositorio usa `.github/workflows/deploy.yml` con esta estrategia:
 
 - **Sin configuración VPS**: el job `deploy_vps` se omite y el workflow termina exitosamente con deploy a Pages.
 - **Con configuración VPS completa**: además del deploy a Pages, se ejecuta deploy al VPS.
+- Si falta cualquier valor VPS requerido (incluyendo `VPS_KNOWN_HOSTS`), el workflow continúa solo con GitHub Pages.
 - **Sin `CUSTOM_DOMAIN`**: el build se genera compatible con `https://<usuario>.github.io/<repo>/`.
 - **Con `CUSTOM_DOMAIN`**: el build usa rutas raíz (`/`) y además se publica `CNAME`.
 
@@ -39,9 +40,9 @@ Configura estos valores en **Settings → Secrets and variables → Actions**:
 #### Repository Secrets
 
 - `VPS_SSH_KEY` (opcional): clave privada SSH para conectar al VPS.
-- `VPS_KNOWN_HOSTS` (opcional, recomendado): contenido de `known_hosts` para validar huella del servidor sin depender de `ssh-keyscan`.
+- `VPS_KNOWN_HOSTS` (requerido para VPS): contenido de `known_hosts` para validar huella del servidor.
 
-> Para habilitar deploy VPS, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR` y `VPS_SSH_KEY`.
+> Para habilitar deploy VPS, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR`, `VPS_SSH_KEY` y `VPS_KNOWN_HOSTS`.
 
 ## Rehabilitar/ajustar despliegue a VPS después
 
