@@ -44,6 +44,6 @@ Set the following values in **Settings → Secrets and variables → Actions**:
 
 > To enable VPS deployment, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR`, `VPS_SSH_KEY`, and `VPS_KNOWN_HOSTS`.
 
-## Re-enable/adjust VPS deployment later
+## Re-enabling or adjusting VPS deployment
 
 No workflow redesign is needed: just add/update the variables/secrets above and run the workflow again (push to `main` or `workflow_dispatch`).
