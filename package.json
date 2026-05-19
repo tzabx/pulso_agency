@@ -1,0 +1,22 @@
+{
+  "name": "pulso-agency",
+  "version": "1.0.0",
+  "description": "Landing de Pulso Inteligente Agency en Astro y Tailwind CSS",
+  "scripts": {
+    "test": "echo \"No test suite configured\"",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.4",
+    "astro": "^5.18.1",
+    "tailwindcss": "^3.4.19"
+  },
+  "private": true
+}

@@ -1,0 +1,21 @@
+---
+import BaseCard from '../common/BaseCard.astro';
+
+interface Props {
+  initials: string;
+  quote: string;
+  name: string;
+  role: string;
+}
+
+const { initials, quote, name, role } = Astro.props;
+---
+
+<BaseCard className="h-full transition hover:-translate-y-1.5">
+  <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-brand-mint bg-brand-dark text-lg font-bold text-white">
+    {initials}
+  </div>
+  <p class="mb-4 text-[0.95rem] italic leading-relaxed text-brand-mid">“{quote}”</p>
+  <p class="font-bold text-brand-dark">{name}</p>
+  <p class="text-xs text-brand-light">{role}</p>
+</BaseCard>

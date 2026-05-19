@@ -1,0 +1,27 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'default' | 'dark' | 'soft';
+  className?: string;
+  containerClassName?: string;
+}
+
+const {
+  id,
+  tone = 'default',
+  className = '',
+  containerClassName = '',
+} = Astro.props;
+
+const sectionToneClass = {
+  default: 'bg-brand-cream text-brand-dark',
+  dark: 'bg-brand-dark text-brand-cream',
+  soft: 'bg-soft-panel text-brand-dark',
+}[tone];
+---
+
+<section id={id} class:list={['py-20 lg:py-24', sectionToneClass, className]}>
+  <div class:list={['mx-auto max-w-shell px-8', containerClassName]}>
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+interface Props {
+  icon: string;
+  label: string;
+  href?: string;
+}
+
+const { icon, label, href } = Astro.props;
+---
+
+<div class="flex items-center gap-2 text-sm text-brand-light">
+  {href ? (
+    <a href={href} class="flex items-center gap-2 transition hover:text-white" target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer noopener' : undefined}>
+      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-dark2 text-sm">{icon}</span>
+      <span>{label}</span>
+    </a>
+  ) : (
+    <>
+      <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-dark2 text-sm">{icon}</span>
+      <span>{label}</span>
+    </>
+  )}
+</div>
