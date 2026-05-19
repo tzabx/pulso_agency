@@ -39,6 +39,7 @@ Configura estos valores en **Settings → Secrets and variables → Actions**:
 #### Repository Secrets
 
 - `VPS_SSH_KEY` (opcional): clave privada SSH para conectar al VPS.
+- `VPS_KNOWN_HOSTS` (opcional, recomendado): contenido de `known_hosts` para validar huella del servidor sin depender de `ssh-keyscan`.
 
 > Para habilitar deploy VPS, define `VPS_HOST`, `VPS_USER`, `VPS_TARGET_DIR` y `VPS_SSH_KEY`.
 
