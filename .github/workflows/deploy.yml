@@ -48,11 +48,11 @@ jobs:
         with:
           path: dist
 
-      - name: Upload VPS artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-dist
-          path: dist
+      # - name: Upload VPS artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: site-dist
+      #     path: dist
 
   deploy_pages:
     runs-on: ubuntu-latest
@@ -65,44 +65,44 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  deploy_vps:
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ vars.VPS_HOST != '' && vars.VPS_USER != '' && vars.VPS_TARGET_DIR != '' && secrets.VPS_SSH_KEY != '' && secrets.VPS_KNOWN_HOSTS != '' }}
-    steps:
-      - name: Download built site
-        uses: actions/download-artifact@v4.1.3
-        with:
-          name: site-dist
-          path: dist
-
-      - name: Configure SSH key
-        env:
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-        run: |
-          if [ -z "$VPS_SSH_KEY" ]; then
-            echo "VPS_SSH_KEY is empty"
-            exit 1
-          fi
-          if ! printf '%s\n' "$VPS_SSH_KEY" | grep -Eq '^-----BEGIN .*PRIVATE KEY-----$'; then
-            echo "VPS_SSH_KEY does not look like a valid private key"
-            exit 1
-          fi
-          if ! printf '%s\n' "$VPS_SSH_KEY" | grep -Eq '^-----END .*PRIVATE KEY-----$'; then
-            echo "VPS_SSH_KEY does not have a valid private key footer"
-            exit 1
-          fi
-          mkdir -p ~/.ssh
-          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-      - name: Use configured known_hosts entries
-        env:
-          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$VPS_KNOWN_HOSTS" >> ~/.ssh/known_hosts
-
-      - name: Deploy to VPS via rsync
-        run: |
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -p ${{ vars.VPS_PORT || '22' }}" dist/ "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}:${{ vars.VPS_TARGET_DIR }}/"
+  # deploy_vps:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   if: ${{ vars.VPS_HOST != '' && vars.VPS_USER != '' && vars.VPS_TARGET_DIR != '' && secrets.VPS_SSH_KEY != '' && secrets.VPS_KNOWN_HOSTS != '' }}
+  #   steps:
+  #     - name: Download built site
+  #       uses: actions/download-artifact@v4.1.3
+  #       with:
+  #         name: site-dist
+  #         path: dist
+  #
+  #     - name: Configure SSH key
+  #       env:
+  #         VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+  #       run: |
+  #         if [ -z "$VPS_SSH_KEY" ]; then
+  #           echo "VPS_SSH_KEY is empty"
+  #           exit 1
+  #         fi
+  #         if ! printf '%s\n' "$VPS_SSH_KEY" | grep -Eq '^-----BEGIN .*PRIVATE KEY-----$'; then
+  #           echo "VPS_SSH_KEY does not look like a valid private key"
+  #           exit 1
+  #         fi
+  #         if ! printf '%s\n' "$VPS_SSH_KEY" | grep -Eq '^-----END .*PRIVATE KEY-----$'; then
+  #           echo "VPS_SSH_KEY does not have a valid private key footer"
+  #           exit 1
+  #         fi
+  #         mkdir -p ~/.ssh
+  #         printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
+  #         chmod 600 ~/.ssh/deploy_key
+  #
+  #     - name: Use configured known_hosts entries
+  #       env:
+  #         VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+  #       run: |
+  #         mkdir -p ~/.ssh
+  #         printf '%s\n' "$VPS_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+  #
+  #     - name: Deploy to VPS via rsync
+  #       run: |
+  #         rsync -az --delete -e "ssh -i ~/.ssh/deploy_key -p ${{ vars.VPS_PORT || '22' }}" dist/ "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}:${{ vars.VPS_TARGET_DIR }}/"
