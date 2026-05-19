@@ -6,6 +6,8 @@ const trimTrailingSlash = (value: string) => {
   return value.slice(0, -1);
 };
 
+const basePath = trimTrailingSlash(import.meta.env.BASE_URL);
+
 /**
  * Prefixes root-relative static asset paths with Astro's configured base URL.
  * Protocol-relative URLs (`//...`) and non-root-relative values are returned as-is.
@@ -19,6 +21,5 @@ export const withBasePath = (path: string) => {
     return path;
   }
 
-  const basePath = trimTrailingSlash(import.meta.env.BASE_URL);
   return `${basePath}${path}`;
 };
