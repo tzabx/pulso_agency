@@ -1,0 +1,94 @@
+name: Deploy static site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Add custom domain file
+        if: ${{ vars.CUSTOM_DOMAIN != '' }}
+        run: echo "${{ vars.CUSTOM_DOMAIN }}" > dist/CNAME
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Upload VPS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: dist
+
+  deploy_pages:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  deploy_vps:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ vars.VPS_HOST != '' && vars.VPS_USER != '' && vars.VPS_TARGET_DIR != '' && secrets.VPS_SSH_KEY != '' }}
+    steps:
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: dist
+
+      - name: Configure SSH key
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Trust VPS host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ vars.VPS_PORT || '22' }}" "${{ vars.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS via rsync
+        run: |
+          rsync -az --delete -e "ssh -p ${{ vars.VPS_PORT || '22' }}" dist/ "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}:${{ vars.VPS_TARGET_DIR }}/"
