@@ -2,11 +2,31 @@
 
 Pulso Inteligente Agency landing page.
 
+## Estructura paralela
+
+- `Astro` en la raíz del repositorio.
+- `React + Vite` en `react_app/`.
+- Datos compartidos para ambos en `shared/data/`.
+
 ## Local development
 
 ```bash
 npm ci
-npm run dev
+npm --prefix react_app ci
+```
+
+### Astro
+
+```bash
+npm run dev:astro
+npm run build:astro
+```
+
+### React (Vite)
+
+```bash
+npm run dev:react
+npm run build:react
 ```
 
 ## Automatic deployment
